@@ -18,10 +18,7 @@
 </head>
 
 <body style=" background: #212424;">
-  <div id="loading" style="display: none; text-align: center;">
-    <img src="loading.gif" alt="Loading" width="50" height="50">
-    <p>جاري البحث...</p>
-  </div>
+ 
   <div class="card" style="width: 30rem; margin: 15px auto;">
     <div class="card-header">
       <h5 class="card-title">برنامج للبحث عن بيانات طالب في مدرسة دير البلح الاعدادية أ</h5>
@@ -40,7 +37,12 @@
             <input class="form-control" id="searchInput" placeholder="اكتب رقم هوية الطالب" style=" direction: rtl;">
           </div>
           <div class="col-md-2">
-            <button id="searchButton" class="btn btn-primary">بحث</button>
+            <button id="searchButton" class="btn btn-primary">
+              <span id="searchButtonText">بحث</span>
+              <div id="searchButtonSpinner" class="spinner-border spinner-border-sm ms-2" role="status" style="display: none;">
+                <span class="visually-hidden">جاري البحث...</span>
+              </div>
+            </button>
           </div>
         </div>
         <div class="card-body">
@@ -63,10 +65,11 @@
 
 
   <script>
-    document.getElementById('searchButton').addEventListener('click', () => {
+     document.getElementById('searchButton').addEventListener('click', async () => {
     const searchInput = document.getElementById('searchInput').value;
-    toggleLoading(true); // تشغيل عنصر الـ Loading
-    fetchExcelAndSearch(searchInput);
+    toggleSearchButtonLoading(true); // تشغيل الـ Spinner في زر البحث
+    await fetchExcelAndSearch(searchInput);
+    toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
   });
 
   async function fetchExcelAndSearch(studentName) {
@@ -92,11 +95,21 @@
     }
   }
 
-  function toggleLoading(show) {
-    const loadingElement = document.getElementById('loading');
-    loadingElement.style.display = show ? 'block' : 'none';
-  }
+  function toggleSearchButtonLoading(loading) {
+    const searchButton = document.getElementById('searchButton');
+    const searchButtonText = document.getElementById('searchButtonText');
+    const searchButtonSpinner = document.getElementById('searchButtonSpinner');
 
+    if (loading) {
+      searchButtonText.style.display = 'none';
+      searchButtonSpinner.style.display = 'inline-block';
+      searchButton.disabled = true; // تعطيل الزر أثناء الـ Spinner
+    } else {
+      searchButtonText.style.display = 'inline-block';
+      searchButtonSpinner.style.display = 'none';
+      searchButton.disabled = false; // تفعيل الزر بعد الإنتهاء من البحث
+    }
+  }
   function displayResults(results) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';

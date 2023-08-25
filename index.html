@@ -64,7 +64,7 @@
         const studentName = document.getElementById('studentName').value;
 
         // Fetch data from Gist
-        fetch('https://gist.githubusercontent.com/maherzalan/88797f42a3c274d2f94e5f61e0ce30de/raw/88797f42a3c274d2f94e5f61e0ce30de.js')
+        fetch('https://gist.githubusercontent.com/maherzalan/88797f42a3c274d2f94e5f61e0ce30de.js')
             .then(response => response.json())
             .then(data => {
                 // Assuming the data is in the format of { "student1": {...}, "student2": {...}, ... }

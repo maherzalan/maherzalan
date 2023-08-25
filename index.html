@@ -32,7 +32,7 @@
                 const sheetName = workbook.SheetNames[0];
                 const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-                const results = jsonData.filter(student => studentName === student['اسم الطالب']);
+                const results = jsonData.filter(student => studentName === student['اسم الطالب عربي']);
                 displayResults(results);
             } catch (error) {
                 console.error('Error fetching or processing data:', error);
@@ -47,9 +47,9 @@
                 results.forEach(result => {
                     const studentInfo = `
                         <div>
-                            <h2>${result['اسم الطالب']}</h2>
-                            <p>ID: ${result['رقم الهوية']}</p>
-                            <p>Phone: ${result['رقم الهاتف']}</p>
+                            <h2>${result['اسم الطالب عربي']}</h2>
+                            <p>ID: ${result['رقم بطاقة التعريف']}</p>
+                            <p>Phone: ${result['جوال العائلة']}</p>
                             <p>Department: ${result['الشعبة']}</p>
                             <!-- Add more fields here as needed -->
                         </div>

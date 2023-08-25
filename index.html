@@ -24,15 +24,22 @@
     </div>
     <div class="card-body" style="   background: #00ccff21;">
 
-      <p class="card-text" style="text-align: justify;">هذا التطبيق لتسهيل عملية الاستعلام عن بيانات الطلاب في مدرسة ذكور دير البلح الإعدادية أ  <p class="fw-bold text-danger">وذلك من خلال ادخال رقم هوية الطالب</p> </p>
+      <p class="card-text" style="text-align: justify;">هذا التطبيق لتسهيل عملية الاستعلام عن بيانات الطلاب في مدرسة
+        ذكور دير البلح الإعدادية أ
+      <p class="fw-bold text-danger">وذلك من خلال ادخال رقم هوية الطالب</p>
+      </p>
       <div class="card-header">
 
-        <div class="mb-3">
-
-          <label for="searchInput" class="form-label">رقم هوية الطالب</label>
-          <input class="form-control" id="searchInput" placeholder="اكتب رقم هوية الطالب" style=" direction: rtl;">
-          <button id="searchButton" class="btn btn-primary waves-effect">بحث</button>
-
+        <div class="row">
+          <div class="col-md-6">
+            <label for="searchInput" class="form-label">رقم هوية الطالب</label>
+            <input class="form-control" id="searchInput" placeholder="اكتب رقم هوية الطالب" style=" direction: rtl;">
+          </div>
+          <div class="col-md-2">
+            <button id="searchButton" class="btn btn-primary">بحث</button>
+          </div>
+        </div>
+        <div class="card-body">
           <div id="results"></div>
         </div>
       </div>

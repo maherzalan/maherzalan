@@ -91,7 +91,7 @@
       toggleLoading(false); // إيقاف عنصر الـ Loading
       displayResults(results);
     } catch (error) {
-      toggleLoading(false); // إيقاف عنصر الـ Loading في حالة الخطأ أيضًا
+      toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading في حالة الخطأ أيضًا
       console.error('Error fetching or processing data:', error);
     }
   }

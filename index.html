@@ -53,5 +53,38 @@
 </div>
 <script src="xlsx.full.min.js"></script>
 	<script src="myscript.js"></script>
+  <script>
+    // The JavaScript code from the Gist link
+    function fetchStudentData() {
+        const studentName = document.getElementById('studentName').value;
+
+        // Fetch data from Gist
+        fetch('https://gist.githubusercontent.com/maherzalan/88797f42a3c274d2f94e5f61e0ce30de/raw/88797f42a3c274d2f94e5f61e0ce30de.js')
+            .then(response => response.json())
+            .then(data => {
+                // Assuming the data is in the format of { "student1": {...}, "student2": {...}, ... }
+                const studentInfo = data[studentName];
+
+                if (studentInfo) {
+                    // Display student information on the page
+                    const studentDataElement = document.getElementById('studentData');
+                    studentDataElement.innerHTML = `
+                        <h2>${studentInfo.name}</h2>
+                        <p>ID: ${studentInfo.id}</p>
+                        <p>Phone: ${studentInfo.phone}</p>
+                        <p>Department: ${studentInfo.department}</p>
+                        <!-- Add more fields here as needed -->
+                    `;
+                } else {
+                    console.log('Student not found');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching student data:', error);
+            });
+    }
+
+    document.getElementById('searchButton').addEventListener('click', fetchStudentData);
+</script>
   </body>
 </html>

@@ -47,7 +47,12 @@
             </button>
           </div>
         </div>
+        <div class="card-header">
+          <h5 class="card-title">البحث عن بيانات طالب في مدرسة ذكور دير البلح الاعدادية أ</h5>
+          <span id="resultCount" class="badge bg-secondary">0 نتائج</span>
+        </div>
         <div class="card-body">
+
           <div id="results"></div>
         </div>
       </div>
@@ -124,9 +129,12 @@
     }
     function displayResults(results) {
   const resultsDiv = document.getElementById('results');
+  const resultCountSpan = document.getElementById('resultCount');
+
   resultsDiv.innerHTML = '';
 
   if (results.length > 0) {
+    resultCountSpan.textContent = `${results.length} نتائج`; // تحديث نص العدد
     results.forEach(result => {
       const familyMobile = result['جوال العائلة'] || 'غير متوفر'; // تحقق إذا كان الجوال متوفرًا أو لا
       const studentInfo = `
@@ -140,6 +148,7 @@
       resultsDiv.innerHTML += studentInfo;
     });
   } else {
+    resultCountSpan.textContent = '0 نتائج'; // إعادة ضبط العدد إلى صفر في حالة عدم وجود نتائج
     resultsDiv.innerHTML = '<p>عذراً لا يوجد بيانات لهذا الطالب.</p>';
   }
 }

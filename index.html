@@ -88,7 +88,7 @@
       const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets['RP030Excle']);
       console.log(jsonData);
       const results = jsonData.filter(student => studentName == student['رقم بطاقة التعريف']);
-      toggleLoading(false); // إيقاف عنصر الـ Loading
+      toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading
       displayResults(results);
     } catch (error) {
       toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading في حالة الخطأ أيضًا

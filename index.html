@@ -18,7 +18,7 @@
 </head>
 
 <body style=" background: #212424;">
- 
+
   <div class="card" style="width: 34rem; margin: 15px auto;">
     <div class="card-header">
       <h5 class="card-title">البحث عن بيانات طالب في مدرسة ذكور دير البلح الاعدادية أ</h5>
@@ -34,13 +34,14 @@
         <div class="row">
           <label for="searchInput" class="form-label">رقم هوية الطالب</label>
           <div class="col-md-10">
-            
+
             <input class="form-control" id="searchInput" placeholder="اكتب رقم هوية الطالب" style=" direction: rtl;">
           </div>
           <div class="col-md-2">
             <button id="searchButton" class="btn btn-primary">
               <span id="searchButtonText">بحث</span>
-              <div id="searchButtonSpinner" class="spinner-border spinner-border-sm ms-2" role="status" style="display: none;">
+              <div id="searchButtonSpinner" class="spinner-border spinner-border-sm ms-2" role="status"
+                style="display: none;">
                 <span class="visually-hidden">جاري البحث...</span>
               </div>
             </button>
@@ -66,78 +67,80 @@
 
 
   <script>
-     document.getElementById('searchButton').addEventListener('click', async () => {
-    const searchInput = document.getElementById('searchInput').value;
-    toggleSearchButtonLoading(true); // تشغيل الـ Spinner في زر البحث
-    await fetchExcelAndSearch(searchInput);
-    toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
-  });
-
-  document.getElementById('searchInput').addEventListener('keypress', async (event) => {
-    if (event.key === 'Enter') {
+    document.getElementById('searchButton').addEventListener('click', async () => {
       const searchInput = document.getElementById('searchInput').value;
       toggleSearchButtonLoading(true); // تشغيل الـ Spinner في زر البحث
       await fetchExcelAndSearch(searchInput);
       toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
-    }
-  });
-  async function fetchExcelAndSearch(studentName) {
-    try {
-      const response = await fetch('data.xls', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        }
-      });
-      const arrayBuffer = await response.arrayBuffer();
-      const data = new Uint8Array(arrayBuffer);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets['RP030Excle']);
-      console.log(jsonData);
-      const results = jsonData.filter(student => studentName == student['رقم بطاقة التعريف']);
-      toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading
-      displayResults(results);
-    } catch (error) {
-      toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading في حالة الخطأ أيضًا
-      console.error('Error fetching or processing data:', error);
-    }
-  }
+    });
 
-  function toggleSearchButtonLoading(loading) {
-    const searchButton = document.getElementById('searchButton');
-    const searchButtonText = document.getElementById('searchButtonText');
-    const searchButtonSpinner = document.getElementById('searchButtonSpinner');
+    document.getElementById('searchInput').addEventListener('keypress', async (event) => {
+      if (event.key === 'Enter') {
+        const searchInput = document.getElementById('searchInput').value;
+        toggleSearchButtonLoading(true); // تشغيل الـ Spinner في زر البحث
+        await fetchExcelAndSearch(searchInput);
+        toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
+      }
+    });
 
-    if (loading) {
-      searchButtonText.style.display = 'none';
-      searchButtonSpinner.style.display = 'inline-block';
-      searchButton.disabled = true; // تعطيل الزر أثناء الـ Spinner
-    } else {
-      searchButtonText.style.display = 'inline-block';
-      searchButtonSpinner.style.display = 'none';
-      searchButton.disabled = false; // تفعيل الزر بعد الإنتهاء من البحث
+    async function fetchExcelAndSearch(searchValue) {
+      try {
+        const response = await fetch('data.xls', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          }
+        });
+        const arrayBuffer = await response.arrayBuffer();
+        const data = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets['RP030Excle']);
+        const results = jsonData.filter(student => {
+          return student['رقم بطاقة التعريف'] === searchValue || student['اسم الطالب عربي'].includes(searchValue);
+        });
+        toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading
+        displayResults(results);
+      } catch (error) {
+        toggleSearchButtonLoading(false); // إيقاف عنصر الـ Loading في حالة الخطأ أيضًا
+        console.error('Error fetching or processing data:', error);
+      }
     }
-  }
-  function displayResults(results) {
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
 
-    if (results.length > 0) {
-      results.forEach(result => {
-        const studentInfo = `
-                    <div class="fw-bold text-success" style="    text-align: center;">
+
+    function toggleSearchButtonLoading(loading) {
+      const searchButton = document.getElementById('searchButton');
+      const searchButtonText = document.getElementById('searchButtonText');
+      const searchButtonSpinner = document.getElementById('searchButtonSpinner');
+
+      if (loading) {
+        searchButtonText.style.display = 'none';
+        searchButtonSpinner.style.display = 'inline-block';
+        searchButton.disabled = true; // تعطيل الزر أثناء الـ Spinner
+      } else {
+        searchButtonText.style.display = 'inline-block';
+        searchButtonSpinner.style.display = 'none';
+        searchButton.disabled = false; // تفعيل الزر بعد الإنتهاء من البحث
+      }
+    }
+    function displayResults(results) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      if (results.length > 0) {
+        results.forEach(result => {
+          const studentInfo = `
+                    <div class="fw-bold text-success" style=" text-align: center;background: #fff;border-radius: 26px;padding: 7px;margin: 28px 0;">
                         <h2>${result['اسم الطالب عربي']}</h2>
                         <h3>الصف: ${result['الصف']} ${result['الشعبة']}</h3>
                         <!-- Add more fields here as needed -->
                     </div>
                 `;
-        resultsDiv.innerHTML += studentInfo;
-      });
-    } else {
-      resultsDiv.innerHTML = '<p>عذراً لا يوجد بيانات لهذا الطالب.</p>';
+          resultsDiv.innerHTML += studentInfo;
+        });
+      } else {
+        resultsDiv.innerHTML = '<p>عذراً لا يوجد بيانات لهذا الطالب.</p>';
+      }
     }
-  }
   </script>
 
 

@@ -123,24 +123,27 @@
       }
     }
     function displayResults(results) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = '';
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = '';
 
-      if (results.length > 0) {
-        results.forEach(result => {
-          const studentInfo = `
-                    <div class="fw-bold text-success" style=" text-align: center;background: #fff;border-radius: 26px;padding: 7px;margin: 28px 0;">
-                        <h2>${result['اسم الطالب عربي']}</h2>
-                        <h3>الصف: ${result['الصف']} ${result['الشعبة']}</h3>
-                        <!-- Add more fields here as needed -->
-                    </div>
-                `;
-          resultsDiv.innerHTML += studentInfo;
-        });
-      } else {
-        resultsDiv.innerHTML = '<p>عذراً لا يوجد بيانات لهذا الطالب.</p>';
-      }
-    }
+  if (results.length > 0) {
+    results.forEach(result => {
+      const familyMobile = result['جوال العائلة'] || 'غير متوفر'; // تحقق إذا كان الجوال متوفرًا أو لا
+      const studentInfo = `
+        <div class="fw-bold text-success" style=" text-align: center;background: #fff;border-radius: 26px;padding: 7px;margin: 28px 0;">
+          <h2>${result['اسم الطالب عربي']}</h2>
+          <h3>الصف: ${result['الصف']} ${result['الشعبة']}</h3>
+          <p>جوال العائلة: ${familyMobile}</p>
+          <!-- Add more fields here as needed -->
+        </div>
+      `;
+      resultsDiv.innerHTML += studentInfo;
+    });
+  } else {
+    resultsDiv.innerHTML = '<p>عذراً لا يوجد بيانات لهذا الطالب.</p>';
+  }
+}
+
   </script>
 
 

@@ -14,14 +14,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"
     integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
 
-  <title>البحث عن طالب في مدرسة دير البلح الاعدادية أ </title>
+  <title>البحث عن طالب في مدرسة ذكور دير البلح الاعدادية أ </title>
 </head>
 
 <body style=" background: #212424;">
  
-  <div class="card" style="width: 30rem; margin: 15px auto;">
+  <div class="card" style="width: 34rem; margin: 15px auto;">
     <div class="card-header">
-      <h5 class="card-title">برنامج للبحث عن بيانات طالب في مدرسة دير البلح الاعدادية أ</h5>
+      <h5 class="card-title">برنامج للبحث عن بيانات طالب في مدرسة ذكور دير البلح الاعدادية أ</h5>
     </div>
     <div class="card-body" style="   background: #00ccff21;">
 
@@ -118,10 +118,9 @@
     if (results.length > 0) {
       results.forEach(result => {
         const studentInfo = `
-                    <div>
+                    <div class="fw-bold text-success" style="    text-align: center;">
                         <h2>${result['اسم الطالب عربي']}</h2>
-                        <p>الصف: ${result['الصف']}</p>
-                        <p>الشعبة: ${result['الشعبة']}</p>
+                        <h3>الصف: ${result['الصف']} ${result['الشعبة']}</h3>
                         <!-- Add more fields here as needed -->
                     </div>
                 `;

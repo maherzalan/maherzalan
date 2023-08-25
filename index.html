@@ -59,19 +59,20 @@
 <script src="xlsx.full.min.js"></script>
 	<script src="myscript.js"></script>
   <script>
-    // The JavaScript code from the Gist link
     function fetchStudentData() {
         const studentName = document.getElementById('studentName').value;
 
-        // Fetch data from Gist
-        fetch('https://gist.githubusercontent.com/maherzalan/88797f42a3c274d2f94e5f61e0ce30de.js')
+        // Use CORS Anywhere to bypass CORS restrictions
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const gistUrl = 'https://gist.githubusercontent.com/maherzalan/88797f42a3c274d2f94e5f61e0ce30de/raw/88797f42a3c274d2f94e5f61e0ce30de.js';
+
+        // Fetch data from Gist via the proxy
+        fetch(corsProxy + gistUrl)
             .then(response => response.json())
             .then(data => {
-                // Assuming the data is in the format of { "student1": {...}, "student2": {...}, ... }
                 const studentInfo = data[studentName];
 
                 if (studentInfo) {
-                    // Display student information on the page
                     const studentDataElement = document.getElementById('studentData');
                     studentDataElement.innerHTML = `
                         <h2>${studentInfo.name}</h2>

@@ -73,6 +73,14 @@
     toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
   });
 
+  document.getElementById('searchInput').addEventListener('keypress', async (event) => {
+    if (event.key === 'Enter') {
+      const searchInput = document.getElementById('searchInput').value;
+      toggleSearchButtonLoading(true); // تشغيل الـ Spinner في زر البحث
+      await fetchExcelAndSearch(searchInput);
+      toggleSearchButtonLoading(false); // إيقاف الـ Spinner في زر البحث
+    }
+  });
   async function fetchExcelAndSearch(studentName) {
     try {
       const response = await fetch('data.xls', {
